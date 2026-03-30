@@ -1,37 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QuickBite - Food Delivery App
+
+A food delivery web application where users can browse shops, add products to cart, and place orders.
+
+**Live Demo:** [https://eliftech-delivery-frontend-nixh.vercel.app/](https://eliftech-delivery-frontend-nixh.vercel.app/)
+
+## Accomplished Level: Middle + Additional Features
+
+### Base Level
+- **Shops Page** — browse shops, view products, add items to cart
+- **Shopping Cart Page** — view cart items, adjust quantities, remove products, fill in delivery details (email, phone, address), submit order saved to database
+- **Form Validation** — all checkout fields are validated before submission
+
+### Middle Level
+- **Product Filtering by Category** — filter products by category with pill-style UI controls
+- **Product Sorting** — sort by price (ascending/descending) or alphabetically by name
+- **Shop Filtering by Rating** — filter shops by rating range (4.0-5.0, 3.0-4.0, 2.0-3.0)
+
+### Additional Features
+- **Order History Page** — users can look up their orders by email and phone number
+- **Coupons Page** — view all available coupons with copy-to-clipboard, apply them at checkout for discounts
+- **Multi-Shop Cart** — cart supports products from different shops in a single order
+- **Loading Skeletons** — skeleton UI for all loading states
+
+## Tech Stack
+
+### Frontend
+- **Next.js 16** (App Router)
+- **React 19**
+- **TypeScript**
+- **Tailwind CSS 4**
+- **Zustand** (state management)
+
+### Backend
+- **Node.js** with **Express**
+- **MongoDB** with **Mongoose**
+- Hosted on **Render**
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file:
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/
+├── page.tsx              # Shops page (/)
+├── cart/page.tsx          # Shopping cart (/cart)
+├── history/page.tsx       # Order history (/history)
+├── coupons/page.tsx       # Coupons (/coupons)
+└── layout.tsx             # Root layout with header
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+components/
+├── Header.tsx             # Navigation bar
+├── CartBadge.tsx          # Cart icon with item count
+├── ShopSidebar.tsx        # Shop list + rating filters
+├── ProductGrid.tsx        # Product grid with category filter & sort
+├── ProductCard.tsx        # Product card with add/quantity controls
+├── CartPage.tsx           # Cart page layout
+├── CartItem.tsx           # Cart item row
+├── CheckoutForm.tsx       # Delivery form + coupon + order summary
+├── HistoryPage.tsx        # Order history with search
+├── OrderCard.tsx          # Order details card
+├── CouponsPage.tsx        # Coupons listing
+├── CouponCard.tsx         # Coupon card with copy button
+├── ShopPage.tsx           # Shop page orchestrator
+└── Skeleton.tsx           # Loading skeleton components
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# eliftech-delivery-frontend
+lib/api.ts                # API client functions
+store/cartStore.ts        # Zustand cart store
+types/index.ts            # TypeScript interfaces
+```
