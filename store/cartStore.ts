@@ -3,7 +3,6 @@ import { Product, CartItem } from '@/types'
 
 interface CartState {
   items: CartItem[]
-  shopId: string | null
   addItem: (product: Product) => void
   removeItem: (productId: string) => void
   updateQuantity: (productId: string, quantity: number) => void
@@ -13,20 +12,9 @@ interface CartState {
 
 export const useCartStore = create<CartState>((set, get) => ({
   items: [],
-  shopId: null,
 
   addItem: (product) => {
-    const { items, shopId } = get()
-
-    if (shopId && shopId !== product.shop) {
-      const confirmed = window.confirm(
-        'Your cart contains items from another shop. Clear cart and add this item?'
-      )
-      if (!confirmed) return
-      set({ items: [{ ...product, quantity: 1 }], shopId: product.shop })
-      return
-    }
-
+    const { items } = get()
     const existing = items.find((item) => item._id === product._id)
     if (existing) {
       set({
@@ -37,13 +25,12 @@ export const useCartStore = create<CartState>((set, get) => ({
         ),
       })
     } else {
-      set({ items: [...items, { ...product, quantity: 1 }], shopId: product.shop })
+      set({ items: [...items, { ...product, quantity: 1 }] })
     }
   },
 
   removeItem: (productId) => {
-    const items = get().items.filter((item) => item._id !== productId)
-    set({ items, shopId: items.length === 0 ? null : get().shopId })
+    set({ items: get().items.filter((item) => item._id !== productId) })
   },
 
   updateQuantity: (productId, quantity) => {
@@ -58,7 +45,7 @@ export const useCartStore = create<CartState>((set, get) => ({
     })
   },
 
-  clearCart: () => set({ items: [], shopId: null }),
+  clearCart: () => set({ items: [] }),
 
   getTotal: () =>
     get().items.reduce((sum, item) => sum + item.price * item.quantity, 0),

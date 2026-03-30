@@ -5,7 +5,7 @@ import { useCartStore } from '@/store/cartStore'
 
 export default function CartBadge() {
   const items = useCartStore((s) => s.items)
-  const count = items.reduce((sum, item) => sum + item.quantity, 0)
+  const count = items.length
 
   return (
     <Link
