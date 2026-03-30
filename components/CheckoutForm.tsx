@@ -57,18 +57,18 @@ export default function CheckoutForm() {
         itemsByShop[item.shop].push(item)
       }
 
-      await Promise.all(
-        Object.entries(itemsByShop).map(([shopId, shopItems]) =>
-          createOrder({
-            ...form,
-            shop: shopId,
-            items: shopItems.map((item) => ({
-              product: item._id,
-              quantity: item.quantity,
-            })),
-          })
-        )
-      )
+      await createOrder({
+        ...form,
+        shops: Object.entries(itemsByShop).map(([shop, shopItems]) => ({
+          shop,
+          items: shopItems.map((item) => ({
+            product: item._id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+          })),
+        })),
+      })
       clearCart()
       router.push('/history')
     } catch {

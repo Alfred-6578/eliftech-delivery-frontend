@@ -24,7 +24,8 @@ export const createOrder = async (data: object) => {
 export const getOrders = async (params?: Record<string, string>) => {
   const query = params ? '?' + new URLSearchParams(params).toString() : ''
   const res = await fetch(`${BASE_URL}/api/orders${query}`)
-  return res.json()
+  const data = await res.json()
+  return data.orders
 }
 
 export const getCoupons = async () => {

@@ -23,8 +23,19 @@ export interface OrderItem {
     name: string;
     price: number;
   };
+  name: string;
+  price: number;
   quantity: number;
   _id: string;
+}
+
+export interface OrderShop {
+  shop: {
+    _id: string;
+    name: string;
+  };
+  items: OrderItem[];
+  subtotal: number;
 }
 
 export interface Order {
@@ -33,11 +44,7 @@ export interface Order {
   email: string;
   phone: string;
   address: string;
-  shop: {
-    _id: string;
-    name: string;
-  };
-  items: OrderItem[];
+  shops: OrderShop[];
   totalPrice: number;
   createdAt: string;
   updatedAt: string;
