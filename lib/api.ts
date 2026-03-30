@@ -3,12 +3,12 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 export const getShops = async (params?: Record<string, string>) => {
   const query = params ? '?' + new URLSearchParams(params).toString() : ''
   const res = await fetch(`${BASE_URL}/api/shops${query}`)
-  return res.json()
+  const data = await res.json()
+  return data.shops
 }
 
-export const getProducts = async (params?: Record<string, string>) => {
-  const query = params ? '?' + new URLSearchParams(params).toString() : ''
-  const res = await fetch(`${BASE_URL}/api/products${query}`)
+export const getProductsByShop = async (shopId: string) => {
+  const res = await fetch(`${BASE_URL}/api/products/shop/${shopId}`)
   return res.json()
 }
 
