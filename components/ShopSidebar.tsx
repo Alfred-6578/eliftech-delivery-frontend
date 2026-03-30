@@ -32,6 +32,10 @@ export default function ShopSidebar({
   ratingFilter,
   onRatingFilter,
 }: ShopSidebarProps) {
+  const filteredShops = shops.filter(
+    (shop) => shop.rating >= ratingFilter.min && shop.rating <= ratingFilter.max
+  )
+
   return (
     <aside className="w-64 shrink-0">
       <div className="mb-6">
@@ -67,7 +71,7 @@ export default function ShopSidebar({
           Shops
         </h3>
         <div className="space-y-1">
-          {shops ? shops.map((shop) => (
+          {filteredShops.length > 0 ? filteredShops.map((shop) => (
             <button
               key={shop._id}
               onClick={() => onSelectShop(shop)}
@@ -78,8 +82,9 @@ export default function ShopSidebar({
               }`}
             >
               <p className="font-semibold text-sm">{shop.name}</p>
+              <p className="text-xs text-orange mt-0.5">★ {shop.rating.toFixed(1)}</p>
             </button>
-          )): "No shops available" }
+          )) : <p className="text-sm text-gray-400 px-4">No shops found</p>}
         </div>
       </div>
     </aside>

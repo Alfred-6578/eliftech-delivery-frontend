@@ -2,6 +2,7 @@ export interface Shop {
   _id: string;
   name: string;
   image: string;
+  rating: number;
 }
 
 export interface Product {
@@ -17,8 +18,13 @@ export interface CartItem extends Product {
 }
 
 export interface OrderItem {
-  product: string;
+  product: {
+    _id: string;
+    name: string;
+    price: number;
+  };
   quantity: number;
+  _id: string;
 }
 
 export interface Order {
@@ -27,8 +33,14 @@ export interface Order {
   email: string;
   phone: string;
   address: string;
-  shop: string;
+  shop: {
+    _id: string;
+    name: string;
+  };
   items: OrderItem[];
+  totalPrice: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Coupon {
