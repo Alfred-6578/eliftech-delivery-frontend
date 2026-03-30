@@ -30,10 +30,11 @@ export const getOrders = async (params?: Record<string, string>) => {
 
 export const getCoupons = async () => {
   const res = await fetch(`${BASE_URL}/api/coupons`)
-  return res.json()
+  const data = await res.json()
+  return data.coupons
 }
 
 export const validateCoupon = async (code: string) => {
-  const res = await fetch(`${BASE_URL}/api/coupons/${code}`)
+  const res = await fetch(`${BASE_URL}/api/coupons/validate/${code}`)
   return res.json()
 }
