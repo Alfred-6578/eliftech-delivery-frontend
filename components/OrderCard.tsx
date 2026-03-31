@@ -1,12 +1,22 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { Order } from '@/types'
+import { useCartStore } from '@/store/cartStore'
 
 interface OrderCardProps {
   order: Order
 }
 
 export default function OrderCard({ order }: OrderCardProps) {
+  const reorder = useCartStore((s) => s.reorder)
+  const router = useRouter()
+
+  const handleReorder = () => {
+    reorder(order)
+    router.push('/cart')
+  }
+
   const date = new Date(order.createdAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
@@ -58,6 +68,12 @@ export default function OrderCard({ order }: OrderCardProps) {
         <span>{order.name}</span>
         <span>{order.email}</span>
         <span className="ml-auto">{order.address}</span>
+        <button
+          onClick={handleReorder}
+          className="ml-2 px-4 py-1.5 bg-orange text-white text-xs font-medium rounded-lg hover:bg-orange-dark transition-colors"
+        >
+          Reorder
+        </button>
       </div>
     </div>
   )

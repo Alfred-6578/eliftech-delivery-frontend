@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { CartItem as CartItemType } from '@/types'
 import { useCartStore } from '@/store/cartStore'
 
@@ -10,14 +11,23 @@ interface CartItemProps {
 export default function CartItem({ item }: CartItemProps) {
   const updateQuantity = useCartStore((s) => s.updateQuantity)
   const removeItem = useCartStore((s) => s.removeItem)
+  const [loaded, setLoaded] = useState(false)
 
   return (
     <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100">
-      <div className="w-20 h-20 shrink-0 bg-gradient-to-b from-peach-light to-peach rounded-xl flex items-center justify-center">
+      <div className="w-20 h-20 shrink-0 bg-gradient-to-b from-peach-light to-peach rounded-xl overflow-hidden relative">
         {item.image ? (
-          <img src={item.image} alt={item.name} className="w-14 h-14 object-contain" />
+          <>
+            {!loaded && <div className="absolute inset-0 bg-gray-100 animate-pulse" />}
+            <img
+              src={item.image}
+              alt={item.name}
+              onLoad={() => setLoaded(true)}
+              className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            />
+          </>
         ) : (
-          <span className="text-3xl">🍽️</span>
+          <div className="w-full h-full flex items-center justify-center text-3xl">🍽️</div>
         )}
       </div>
 

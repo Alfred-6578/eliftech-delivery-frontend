@@ -1,12 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useCartStore } from '@/store/cartStore'
 import { createOrder, validateCoupon } from '@/lib/api'
 import { useRouter } from 'next/navigation'
 
 export default function CheckoutForm() {
-  const { items, getTotal, clearCart } = useCartStore()
+  const { items, reorderInfo, getTotal, clearCart, clearReorderInfo } = useCartStore()
   const router = useRouter()
 
   const [form, setForm] = useState({
@@ -15,6 +15,13 @@ export default function CheckoutForm() {
     phone: '',
     address: '',
   })
+
+  useEffect(() => {
+    if (reorderInfo) {
+      setForm(reorderInfo)
+      clearReorderInfo()
+    }
+  }, [reorderInfo, clearReorderInfo])
   const [couponCode, setCouponCode] = useState('')
   const [discount, setDiscount] = useState(0)
   const [couponError, setCouponError] = useState('')
